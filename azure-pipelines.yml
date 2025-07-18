@@ -23,12 +23,15 @@ stages:
           - checkout: self
             clean: true
             persistCredentials: true
-            fetchDepth: 0  # ✅ Importante: baixa todas as refs
+            fetchDepth: 0  # necessário para ter acesso aos refs completos
 
           - script: |
               echo "🔧 Configurando Git"
               git config --global user.name "Pedro Vinícios"
               git config --global user.email "pedrooviniciossantos@gmail.com"
+
+              echo "🔍 Criando branch local 'master' a partir de origin/master"
+              git checkout -b master origin/master
 
               echo "📌 Verificando refs locais"
               git show-ref
