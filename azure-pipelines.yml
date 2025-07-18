@@ -13,18 +13,8 @@ pr:
 pool:
   vmImage: 'ubuntu-latest'
 
-parameters:
-  - name: githubBranch
-    type: string
-    default: 'main'
-
-  - name: azureBranch
-    type: string
-    default: 'master'  # agora é a branch principal que dispara o push
-
-  - name: githubRepoUrl
-    type: string
-    default: 'https://github.com/PedroVinicioss/MeuDiagnostico.git'
+variables:
+  - group: github  # Referencia o grupo de variáveis com username e token
 
 stages:
   - stage: SyncToGitHub
@@ -42,14 +32,13 @@ stages:
               git config --global user.email "pedrooviniciossantos@gmail.com"
 
               echo "🔁 Verificando branch atual"
-              git checkout $(azureBranch)
+              git checkout master
 
               echo "➕ Adicionando remoto GitHub"
-              git remote add github https://$(GITHUB_USERNAME):$(GITHUB_TOKEN)@github.com/$(GITHUB_REPO)
+              git remote add github https://$(GITHUB_USERNAME):$(GITHUB_TOKEN)@github.com/PedroVinicioss/MeuDiagnostico.git
 
               echo "⬆️ Dando push para o GitHub"
-              git push github $(azureBranch):$(githubBranch) --force
+              git push github master:main --force
             env:
               GITHUB_USERNAME: $(github.username)
               GITHUB_TOKEN: $(github.token)
-              GITHUB_REPO: PedroVinicioss/MeuDiagnostico
