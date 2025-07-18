@@ -23,14 +23,15 @@ stages:
           - checkout: self
             clean: true
             persistCredentials: true
+            fetchDepth: 0  # ✅ Importante: baixa todas as refs
 
           - script: |
               echo "🔧 Configurando Git"
               git config --global user.name "Pedro Vinícios"
               git config --global user.email "pedrooviniciossantos@gmail.com"
 
-              echo "📌 Verificando commit atual"
-              git log -1 --oneline
+              echo "📌 Verificando refs locais"
+              git show-ref
 
               echo "➕ Adicionando remoto GitHub"
               git remote add github https://${GITHUB_USERNAME}:${GITHUB_TOKEN}@github.com/PedroVinicioss/MeuDiagnostico.git
