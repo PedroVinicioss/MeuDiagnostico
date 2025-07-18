@@ -1,0 +1,46 @@
+trigger:
+  branches:
+    include:
+      - develop
+
+pr:
+  branches:
+    include:
+      - develop
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  - group: github
+
+stages:
+  - stage: SyncToGitHubDevelop
+    displayName: 'Sync Azure develop to GitHub develop'
+    jobs:
+      - job: PushToGitHub
+        steps:
+          - checkout: self
+            clean: true
+            persistCredentials: true
+            fetchDepth: 0
+
+          - script: |
+              echo "🔧 Configurando Git"
+              git config --global user.name "Pedro Vinícios"
+              git config --global user.email "pedrooviniciossantos@gmail.com"
+
+              echo "🔍 Criando branch local 'develop' a partir de origin/develop"
+              git checkout -b develop origin/develop
+
+              echo "📌 Verificando refs locais"
+              git show-ref
+
+              echo "➕ Adicionando remoto GitHub"
+              git remote add github https://${GITHUB_USERNAME}:${GITHUB_TOKEN}@github.com/PedroVinicioss/MeuDiagnostico.git
+
+              echo "⬆️ Dando push da branch develop para develop no GitHub"
+              git push github refs/heads/develop:refs/heads/develop --force
+            env:
+              GITHUB_USERNAME: $(github.username)
+              GITHUB_TOKEN: $(github.token)
