@@ -1,10 +1,8 @@
-# Executa ao fazer commit na branch master
 trigger:
   branches:
     include:
       - master
 
-# Executa ao abrir um Pull Request que afeta a branch master
 pr:
   branches:
     include:
@@ -14,7 +12,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  - group: github  # Referencia o grupo de variáveis com username e token
+  - group: github  # Grupo que contém github.username e github.token
 
 stages:
   - stage: SyncToGitHub
@@ -31,14 +29,14 @@ stages:
               git config --global user.name "Pedro Vinícios"
               git config --global user.email "pedrooviniciossantos@gmail.com"
 
-              echo "🔁 Verificando branch atual"
-              git checkout master
+              echo "🔍 Branch atual:"
+              git branch
 
               echo "➕ Adicionando remoto GitHub"
-              git remote add github https://$(GITHUB_USERNAME):$(GITHUB_TOKEN)@github.com/PedroVinicioss/MeuDiagnostico.git
+              git remote add github https://${GITHUB_USERNAME}:${GITHUB_TOKEN}@github.com/PedroVinicioss/MeuDiagnostico.git
 
-              echo "⬆️ Dando push para o GitHub"
-              git push github master:main --force
+              echo "⬆️ Dando push da branch atual para o GitHub"
+              git push github HEAD:main --force
             env:
               GITHUB_USERNAME: $(github.username)
               GITHUB_TOKEN: $(github.token)
