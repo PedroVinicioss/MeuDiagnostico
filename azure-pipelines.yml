@@ -12,7 +12,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  - group: github  # Grupo que contém github.username e github.token
+  - group: github
 
 stages:
   - stage: SyncToGitHub
@@ -29,14 +29,14 @@ stages:
               git config --global user.name "Pedro Vinícios"
               git config --global user.email "pedrooviniciossantos@gmail.com"
 
-              echo "🔍 Branch atual:"
-              git branch
+              echo "📌 Verificando commit atual"
+              git log -1 --oneline
 
               echo "➕ Adicionando remoto GitHub"
               git remote add github https://${GITHUB_USERNAME}:${GITHUB_TOKEN}@github.com/PedroVinicioss/MeuDiagnostico.git
 
-              echo "⬆️ Dando push da branch atual para o GitHub"
-              git push github HEAD:main --force
+              echo "⬆️ Dando push da branch master para main no GitHub"
+              git push github refs/heads/master:refs/heads/main --force
             env:
               GITHUB_USERNAME: $(github.username)
               GITHUB_TOKEN: $(github.token)
