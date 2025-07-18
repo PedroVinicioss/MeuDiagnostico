@@ -1,0 +1,55 @@
+# Executa ao fazer commit na branch master
+trigger:
+  branches:
+    include:
+      - master
+
+# Executa ao abrir um Pull Request que afeta a branch master
+pr:
+  branches:
+    include:
+      - master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+parameters:
+  - name: githubBranch
+    type: string
+    default: 'main'
+
+  - name: azureBranch
+    type: string
+    default: 'master'  # agora é a branch principal que dispara o push
+
+  - name: githubRepoUrl
+    type: string
+    default: 'https://github.com/PedroVinicioss/MeuDiagnostico.git'
+
+stages:
+  - stage: SyncToGitHub
+    displayName: 'Sync Azure master to GitHub portfolio'
+    jobs:
+      - job: PushToGitHub
+        steps:
+          - checkout: self
+            clean: true
+            persistCredentials: true
+
+          - script: |
+              echo "🔧 Configurando Git"
+              git config --global user.name "Pedro Vinícios"
+              git config --global user.email "pedrooviniciossantos@gmail.com"
+
+              echo "🔁 Verificando branch atual"
+              git checkout $(azureBranch)
+
+              echo "➕ Adicionando remoto GitHub"
+              git remote add github https://$(GITHUB_USERNAME):$(GITHUB_TOKEN)@github.com/$(GITHUB_REPO)
+
+              echo "⬆️ Dando push para o GitHub"
+              git push github $(azureBranch):$(githubBranch) --force
+            env:
+              GITHUB_USERNAME: $(github.username)
+              GITHUB_TOKEN: $(github.token)
+              GITHUB_REPO: PedroVinicioss/MeuDiagnostico
