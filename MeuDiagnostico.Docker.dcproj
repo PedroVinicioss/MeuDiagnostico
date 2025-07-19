@@ -1,0 +1,11 @@
+﻿<Project Sdk="Microsoft.Docker.Sdk">
+  <PropertyGroup>
+    <ProjectVersion>2.1</ProjectVersion>
+    <DockerTargetOS>Linux</DockerTargetOS>
+    <ProjectGuid>{89C828F9-73F1-4E1A-B709-1B1F99B4CA92}</ProjectGuid>
+    <DockerLaunchAction>DockerCompose</DockerLaunchAction>
+    <DockerServiceName>public-api</DockerServiceName>
+	  <DockerComposeFilePaths>docker-compose-dev.yml</DockerComposeFilePaths>
+	  <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+  </PropertyGroup>
+</Project>
