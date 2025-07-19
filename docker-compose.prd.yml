@@ -1,0 +1,22 @@
+version: '3.9'
+
+services:
+  public-api:
+    build:
+      context: .
+      dockerfile: src/Backend/MeuDiagnostico.API/Dockerfile
+    ports:
+      - "${PUBLIC_API_PORT}:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
+      - ASPNETCORE_URLS=${ASPNETCORE_URLS}
+
+  admin-api:
+    build:
+      context: .
+      dockerfile: src/Admin/AdminMeuDiagnostico.API/Dockerfile
+    ports:
+      - "${ADMIN_API_PORT}:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
+      - ASPNETCORE_URLS=${ASPNETCORE_URLS}
