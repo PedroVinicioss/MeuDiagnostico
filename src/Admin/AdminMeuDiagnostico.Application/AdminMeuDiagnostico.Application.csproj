@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Shared\MeuDiagnostico.Communication\MeuDiagnostico.Communication.csproj" />
+    <ProjectReference Include="..\..\Shared\MeuDiagnostico.Exceptions\MeuDiagnostico.Exceptions.csproj" />
+    <ProjectReference Include="..\AdminMeuDiagnostico.Domain\AdminMeuDiagnostico.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

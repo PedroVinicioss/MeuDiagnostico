@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Shared\MeuDiagnostico.Communication\MeuDiagnostico.Communication.csproj" />
+    <ProjectReference Include="..\..\Shared\MeuDiagnostico.Exceptions\MeuDiagnostico.Exceptions.csproj" />
+    <ProjectReference Include="..\AdminMeuDiagnostico.Application\AdminMeuDiagnostico.Application.csproj" />
+    <ProjectReference Include="..\AdminMeuDiagnostico.Infraestructure\AdminMeuDiagnostico.Infraestructure.csproj" />
+  </ItemGroup>
+
+</Project>
